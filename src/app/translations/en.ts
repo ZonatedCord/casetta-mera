@@ -23,15 +23,15 @@ export const en = {
     subtitle: 'Three reasons why you\'ll love your stay here',
     breathtakingView: {
       title: 'Breathtaking Views',
-      description: 'Unique panoramas of the alpine mountains with unforgettable sunsets from the private terrace.',
+      description: 'Constant views of Monte Rosa from every window, offering an open mountain panorama throughout the day.',
     },
     nearLifts: {
       title: 'Near the Lifts',
-      description: 'Just 200 meters from the ski lifts. Ski-in ski-out for a perfect day on the snow.',
+      description: 'The ski slope runs literally above the property: step outside and you’re immediately on your skis. A true ski-in / ski-out experience.',
     },
     familyFriendly: {
       title: 'Perfect for Families',
-      description: 'Spacious areas, children\'s games, and a safe environment for the whole family.',
+      description: 'Comfortable, functional spaces in a calm and safe environment, perfect for families with children in every season.',
     },
   },
 
@@ -45,11 +45,11 @@ export const en = {
     },
     couples: {
       title: 'Couples',
-      description: 'Romantic escape in the quiet of the mountains',
+      description: 'A romantic escape surrounded by the peaceful atmosphere of the mountains.',
     },
     groups: {
       title: 'Groups of friends',
-      description: 'Unforgettable holidays together in freedom',
+      description: 'Enjoy the mountains together, with space, freedom, and unforgettable moments.',
     },
     skiers: {
       title: 'Skiers',
@@ -81,18 +81,60 @@ export const en = {
   services: {
     title: 'Services & Amenities',
     subtitle: 'Everything you need for an unforgettable stay',
-    wifi: 'Free Wi-Fi',
-    kitchen: 'Full kitchen',
-    tv: 'Satellite TV',
-    ac: 'Air conditioning',
-    fireplace: 'Fireplace',
-    coffee: 'Coffee machine',
-    heating: 'Heating',
-    mountainView: 'Mountain view',
-    parking: 'Private parking',
-    pets: 'Pets allowed',
-    jacuzzi: 'Hot tub',
-    evCharger: 'EV charger',
+    items: {
+      wifi: {
+        title: 'Free Wi-Fi',
+        description: 'Fast Wi-Fi throughout the apartment.',
+      },
+      kitchen: {
+        title: 'Equipped kitchen',
+        description: 'Cookware and utensils included.',
+      },
+      tv: {
+        title: 'Satellite TV',
+        description: 'Satellite channels for relaxing evenings.',
+      },
+      heating: {
+        title: 'Heating',
+        description: 'Warm and cosy in winter.',
+      },
+      fireplace: {
+        title: 'Fireplace',
+        description: 'Authentic mountain fireplace vibe.',
+      },
+      moka: {
+        title: 'Moka coffee',
+        description: 'Moka coffee maker.',
+      },
+      linens: {
+        title: 'Linens included',
+        description: 'Bed linen, towels and blankets provided.',
+      },
+      monteRosaView: {
+        title: 'Monte Rosa view',
+        description: 'Panoramic Monte Rosa views.',
+      },
+      parkingSummer: {
+        title: 'Summer parking',
+        description: 'Parking available in summer.',
+      },
+      pets: {
+        title: 'Pets allowed',
+        description: 'Pets welcome.',
+      },
+      accessibility: {
+        title: 'Wheelchair access',
+        description: 'Wheelchair accessible.',
+      },
+      accessibleShower: {
+        title: 'Accessible shower',
+        description: 'Spacious, accessible shower.',
+      },
+      skiStorage: {
+        title: 'Ski storage',
+        description: 'Ski and gear storage space.',
+      },
+    },
     categories: {
       comfort: {
         title: 'Comfort & Services',
@@ -116,6 +158,24 @@ export const en = {
     winter: 'Winter',
     summer: 'Summer',
     allYear: 'All year',
+    learnMore: 'Learn more',
+    winterCards: {
+      ski: {
+        title: 'Ski Alpe di Mera',
+        description: 'Direct access to ski lifts with slopes for all levels. Skipass online.',
+        alt: 'Skiing at Alpe di Mera',
+      },
+      snowshoeing: {
+        title: 'Snowshoeing & Nordic Walking',
+        description: 'Marked snow trails with scenic views.',
+        alt: 'Snowshoeing in Alpe di Mera',
+      },
+      playground: {
+        title: 'Playground & Bob Area',
+        description: 'Family fun with snow games and bob sled runs.',
+        alt: 'Snow playground and bob area',
+      },
+    },
     skiing: {
       title: 'Skiing & Snowboarding',
       description: '50+ km of slopes for all levels at your fingertips',

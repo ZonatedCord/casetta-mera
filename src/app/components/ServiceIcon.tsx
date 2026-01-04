@@ -3,11 +3,12 @@ import { motion } from 'motion/react';
 
 interface ServiceIconProps {
   icon: LucideIcon;
-  label: string;
+  title: string;
+  description: string;
   index: number;
 }
 
-export function ServiceIcon({ icon: Icon, label, index }: ServiceIconProps) {
+export function ServiceIcon({ icon: Icon, title, description, index }: ServiceIconProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -20,7 +21,10 @@ export function ServiceIcon({ icon: Icon, label, index }: ServiceIconProps) {
       <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center">
         <Icon className="w-6 h-6 text-[var(--matcha-brew)]" />
       </div>
-      <span className="text-sm text-center text-[var(--forest-roast)]">{label}</span>
+      <div className="text-center">
+        <div className="text-sm font-medium text-[var(--forest-roast)]">{title}</div>
+        <div className="text-xs text-[var(--forest-roast)]/60">{description}</div>
+      </div>
     </motion.div>
   );
 }

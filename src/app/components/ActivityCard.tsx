@@ -6,11 +6,13 @@ interface ActivityCardProps {
   title: string;
   description: string;
   image: string;
+  alt: string;
   link?: string;
+  linkLabel?: string;
   index: number;
 }
 
-export function ActivityCard({ title, description, image, link, index }: ActivityCardProps) {
+export function ActivityCard({ title, description, image, alt, link, linkLabel, index }: ActivityCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -24,7 +26,7 @@ export function ActivityCard({ title, description, image, link, index }: Activit
       <div className="relative h-56 overflow-hidden">
         <ImageWithFallback
           src={image}
-          alt={title}
+          alt={alt}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--eclipse)]/60 to-transparent" />
@@ -42,7 +44,7 @@ export function ActivityCard({ title, description, image, link, index }: Activit
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-[var(--matcha-brew)] hover:text-[var(--eclipse)] transition-colors"
           >
-            <span>Scopri di più</span>
+            <span>{linkLabel}</span>
             <ExternalLink className="w-4 h-4" />
           </a>
         )}

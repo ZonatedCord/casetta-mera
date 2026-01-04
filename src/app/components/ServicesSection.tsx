@@ -4,15 +4,16 @@ import {
   Wifi, 
   Utensils, 
   Tv, 
-  Snowflake, 
+  Thermometer, 
   Flame, 
   Coffee,
-  Mountain,
+  BedDouble,
+  MountainSnow,
   CircleParking,
   Dog,
-  Waves,
-  Wind,
-  Zap,
+  Accessibility,
+  ShowerHead,
+  Backpack,
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -20,18 +21,84 @@ export function ServicesSection() {
   const { t } = useLanguage();
   
   const services = [
-    { icon: Wifi, label: t('services.wifi'), category: 'comfort' },
-    { icon: Utensils, label: t('services.kitchen'), category: 'comfort' },
-    { icon: Tv, label: t('services.tv'), category: 'comfort' },
-    { icon: Snowflake, label: t('services.ac'), category: 'comfort' },
-    { icon: Flame, label: t('services.fireplace'), category: 'comfort' },
-    { icon: Coffee, label: t('services.coffee'), category: 'comfort' },
-    { icon: Wind, label: t('services.heating'), category: 'comfort' },
-    { icon: Mountain, label: t('services.mountainView'), category: 'location' },
-    { icon: CircleParking, label: t('services.parking'), category: 'location' },
-    { icon: Dog, label: t('services.pets'), category: 'extras' },
-    { icon: Waves, label: t('services.jacuzzi'), category: 'extras' },
-    { icon: Zap, label: t('services.evCharger'), category: 'extras' },
+    { 
+      icon: Wifi, 
+      title: t('services.items.wifi.title'), 
+      description: t('services.items.wifi.description'), 
+      category: 'comfort' 
+    },
+    { 
+      icon: Utensils, 
+      title: t('services.items.kitchen.title'), 
+      description: t('services.items.kitchen.description'), 
+      category: 'comfort' 
+    },
+    { 
+      icon: Tv, 
+      title: t('services.items.tv.title'), 
+      description: t('services.items.tv.description'), 
+      category: 'comfort' 
+    },
+    { 
+      icon: Thermometer, 
+      title: t('services.items.heating.title'), 
+      description: t('services.items.heating.description'), 
+      category: 'comfort' 
+    },
+    { 
+      icon: Flame, 
+      title: t('services.items.fireplace.title'), 
+      description: t('services.items.fireplace.description'), 
+      category: 'comfort' 
+    },
+    { 
+      icon: Coffee, 
+      title: t('services.items.moka.title'), 
+      description: t('services.items.moka.description'), 
+      category: 'comfort' 
+    },
+    { 
+      icon: BedDouble, 
+      title: t('services.items.linens.title'), 
+      description: t('services.items.linens.description'), 
+      category: 'comfort' 
+    },
+    { 
+      icon: MountainSnow, 
+      title: t('services.items.monteRosaView.title'), 
+      description: t('services.items.monteRosaView.description'), 
+      category: 'location' 
+    },
+    { 
+      icon: CircleParking, 
+      title: t('services.items.parkingSummer.title'), 
+      description: t('services.items.parkingSummer.description'), 
+      category: 'location' 
+    },
+    { 
+      icon: Dog, 
+      title: t('services.items.pets.title'), 
+      description: t('services.items.pets.description'), 
+      category: 'extras' 
+    },
+    { 
+      icon: Accessibility, 
+      title: t('services.items.accessibility.title'), 
+      description: t('services.items.accessibility.description'), 
+      category: 'extras' 
+    },
+    { 
+      icon: ShowerHead, 
+      title: t('services.items.accessibleShower.title'), 
+      description: t('services.items.accessibleShower.description'), 
+      category: 'extras' 
+    },
+    { 
+      icon: Backpack, 
+      title: t('services.items.skiStorage.title'), 
+      description: t('services.items.skiStorage.description'), 
+      category: 'extras' 
+    },
   ];
 
   const categories = {
@@ -88,7 +155,8 @@ export function ServicesSection() {
                     <ServiceIcon
                       key={index}
                       icon={service.icon}
-                      label={service.label}
+                      title={service.title}
+                      description={service.description}
                       index={index}
                     />
                   ))}

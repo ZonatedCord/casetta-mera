@@ -23,15 +23,15 @@ export const it = {
     subtitle: 'Tre motivi per cui amerai il tuo soggiorno qui',
     breathtakingView: {
       title: 'Vista Mozzafiato',
-      description: 'Panorami unici sulle montagne alpine con tramonti indimenticabili dalla terrazza privata.',
+      description: 'Panorama costante sul Monte Rosa da tutte le finestre dell’appartamento, con una vista aperta che accompagna ogni momento della giornata.',
     },
     nearLifts: {
       title: 'Vicino agli Impianti',
-      description: 'A soli 200 metri dagli impianti di risalita. Sci ai piedi per una giornata perfetta sulla neve.',
+      description: 'La pista passa letteralmente sopra casa: esci e sei subito sugli sci, senza camminate né navette. Vera esperienza ski-in / ski-out.',
     },
     familyFriendly: {
       title: 'Perfetta per Famiglie',
-      description: 'Spazi ampi, giochi per bambini, e un ambiente sicuro per tutta la famiglia.',
+      description: 'Spazi comodi e funzionali, ambiente tranquillo e sicuro, ideale per famiglie con bambini in ogni stagione.',
     },
   },
 
@@ -45,11 +45,11 @@ export const it = {
     },
     couples: {
       title: 'Coppie',
-      description: 'Romantica fuga nella quiete della montagna',
+      description: 'Una fuga romantica nella quiete autentica della montagna.',
     },
     groups: {
       title: 'Gruppi di amici',
-      description: 'Vacanze indimenticabili insieme in libertà',
+      description: 'Vivere la montagna insieme, tra libertà, relax e divertimento.',
     },
     skiers: {
       title: 'Sciatori',
@@ -81,18 +81,60 @@ export const it = {
   services: {
     title: 'Servizi & Comfort',
     subtitle: 'Tutto ciò di cui hai bisogno per un soggiorno indimenticabile',
-    wifi: 'Wi-Fi gratuito',
-    kitchen: 'Cucina completa',
-    tv: 'TV satellitare',
-    ac: 'Aria condizionata',
-    fireplace: 'Camino',
-    coffee: 'Macchina caffè',
-    heating: 'Riscaldamento',
-    mountainView: 'Vista montagna',
-    parking: 'Parcheggio privato',
-    pets: 'Animali ammessi',
-    jacuzzi: 'Vasca idromassaggio',
-    evCharger: 'Colonnina EV',
+    items: {
+      wifi: {
+        title: 'Wi-Fi gratuito',
+        description: 'Wi-Fi veloce in tutta la casa.',
+      },
+      kitchen: {
+        title: 'Cucina attrezzata',
+        description: 'Stoviglie e utensili inclusi.',
+      },
+      tv: {
+        title: 'TV satellitare',
+        description: 'Canali satellitari per rilassarti.',
+      },
+      heating: {
+        title: 'Riscaldamento',
+        description: 'Calda e accogliente d\'inverno.',
+      },
+      fireplace: {
+        title: 'Camino',
+        description: 'Atmosfera autentica di montagna.',
+      },
+      moka: {
+        title: 'Caffè con moka',
+        description: 'Moka per il caffè.',
+      },
+      linens: {
+        title: 'Biancheria inclusa',
+        description: 'Lenzuola, asciugamani e coperte incluse.',
+      },
+      monteRosaView: {
+        title: 'Vista Monte Rosa',
+        description: 'Vista panoramica sul Monte Rosa.',
+      },
+      parkingSummer: {
+        title: 'Parcheggio estivo',
+        description: 'Parcheggio disponibile in estate.',
+      },
+      pets: {
+        title: 'Animali ammessi',
+        description: 'Animali benvenuti.',
+      },
+      accessibility: {
+        title: 'Accessibile',
+        description: 'Accessibile anche in carrozzina.',
+      },
+      accessibleShower: {
+        title: 'Doccia accessibile',
+        description: 'Doccia ampia e accessibile.',
+      },
+      skiStorage: {
+        title: 'Deposito sci',
+        description: 'Spazio per sci e attrezzatura.',
+      },
+    },
     categories: {
       comfort: {
         title: 'Comfort & Servizi',
@@ -116,6 +158,24 @@ export const it = {
     winter: 'Inverno',
     summer: 'Estate',
     allYear: 'Tutto l\'anno',
+    learnMore: 'Scopri di più',
+    winterCards: {
+      ski: {
+        title: 'Ski Alpe di Mera',
+        description: 'Accesso diretto agli impianti sciistici con piste per tutti i livelli. Skipass disponibili online.',
+        alt: 'Sci all\'Alpe di Mera',
+      },
+      snowshoeing: {
+        title: 'Ciaspole & Nordic Walking',
+        description: 'Percorsi segnalati nella neve con viste panoramiche.',
+        alt: 'Ciaspole all\'Alpe di Mera',
+      },
+      playground: {
+        title: 'Parco giochi & Area Bob',
+        description: 'Divertimento per famiglie tra giochi sulla neve e discese in bob.',
+        alt: 'Parco giochi sulla neve e area bob',
+      },
+    },
     skiing: {
       title: 'Sci & Snowboard',
       description: '50+ km di piste per tutti i livelli a portata di mano',

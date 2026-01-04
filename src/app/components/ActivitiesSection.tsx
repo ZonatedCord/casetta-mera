@@ -2,28 +2,33 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { ActivityCard } from './ActivityCard';
 import { Snowflake, Sun } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export function ActivitiesSection() {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('winter');
 
   const winterActivities = [
     {
-      title: 'Ski Alpe di Mera',
-      description: 'Accesso diretto agli impianti sciistici con piste per tutti i livelli. Skipass disponibili online.',
+      title: t('activities.winterCards.ski.title'),
+      description: t('activities.winterCards.ski.description'),
       image: 'https://images.unsplash.com/photo-1556217603-efec4f7fd871?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMHNraWluZyUyMHNub3d8ZW58MXx8fHwxNzY2OTYzODQ5fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      link: 'https://www.alpedimera.it'
+      alt: t('activities.winterCards.ski.alt'),
+      link: 'https://alpedimera.it/'
     },
     {
-      title: 'Ciaspole & Nordic Walking',
-      description: 'Percorsi segnalati per ciaspolate nella neve fresca con viste mozzafiato sulle valli.',
-      image: 'https://images.unsplash.com/photo-1648847673583-5c8afff8527a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbHBpbmUlMjBoaWtpbmclMjB0cmFpbHxlbnwxfHx8fDE3NjY5NjM4NTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      link: '#'
+      title: t('activities.winterCards.snowshoeing.title'),
+      description: t('activities.winterCards.snowshoeing.description'),
+      image: '/ciaspole.jpg',
+      alt: t('activities.winterCards.snowshoeing.alt'),
+      link: 'https://alpedimera.it/percorsi-ciaspole-alpe-di-mera-24771'
     },
     {
-      title: 'Sleddog & Slittino',
-      description: 'Esperienza unica con i cani da slitta o discese adrenaliniche in slittino.',
-      image: 'https://images.unsplash.com/photo-1678493388957-3e3738d91f57?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b29kZW4lMjBjYWJpbiUyMGV4dGVyaW9yfGVufDF8fHx8MTc2Njk0ODY5NHww&ixlib=rb-4.1.0&q=80&w=1080',
-      link: '#'
+      title: t('activities.winterCards.playground.title'),
+      description: t('activities.winterCards.playground.description'),
+      image: '/areaGiochi.jpg',
+      alt: t('activities.winterCards.playground.alt'),
+      link: 'https://alpedimera.it/i-parchi-giochi-sulla-neve-24777'
     }
   ];
 
@@ -32,18 +37,21 @@ export function ActivitiesSection() {
       title: 'Trekking & Escursioni',
       description: 'Centinaia di sentieri escursionistici per tutti i livelli, con rifugi alpini lungo il percorso.',
       image: 'https://images.unsplash.com/photo-1648847673583-5c8afff8527a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbHBpbmUlMjBoaWtpbmclMjB0cmFpbHxlbnwxfHx8fDE3NjY5NjM4NTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      alt: 'Trekking in montagna',
       link: '#'
     },
     {
       title: 'Mountain Bike',
       description: 'Tracciati MTB per downhill e cross-country con noleggio bici disponibile.',
       image: 'https://images.unsplash.com/photo-1604677657548-4ced0c4f40c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGJpa2UlMjB0cmFpbHxlbnwxfHx8fDE3NjY5NjM4NTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      alt: 'Mountain bike sui sentieri alpini',
       link: '#'
     },
     {
       title: 'Rifugi Alpini',
       description: 'Visita i rifugi storici della zona per gustare la cucina alpina tradizionale.',
       image: 'https://images.unsplash.com/photo-1756156263665-8e4aa121b642?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbHBpbmUlMjBtb3VudGFpbiUyMGNhYmlufGVufDF8fHx8MTc2Njk2Mzg0OHww&ixlib=rb-4.1.0&q=80&w=1080',
+      alt: 'Rifugio alpino in montagna',
       link: '#'
     }
   ];
@@ -57,9 +65,9 @@ export function ActivitiesSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl mb-4 text-[var(--eclipse)]">Attività & Esperienze</h2>
+          <h2 className="text-4xl md:text-5xl mb-4 text-[var(--eclipse)]">{t('activities.title')}</h2>
           <p className="text-lg text-[var(--forest-roast)]/70 max-w-2xl mx-auto">
-            Scopri le meraviglie dell'Alpe di Mera in ogni stagione
+            {t('activities.subtitle')}
           </p>
         </motion.div>
 
@@ -77,7 +85,7 @@ export function ActivitiesSection() {
               `}
             >
               <Snowflake className="w-4 h-4" />
-              <span className="font-medium">Inverno</span>
+              <span className="font-medium">{t('activities.winter')}</span>
               {activeTab === 'winter' && (
                 <motion.div
                   layoutId="activeTab"
@@ -98,7 +106,7 @@ export function ActivitiesSection() {
               `}
             >
               <Sun className="w-4 h-4" />
-              <span className="font-medium">Estate</span>
+              <span className="font-medium">{t('activities.summer')}</span>
               {activeTab === 'summer' && (
                 <motion.div
                   layoutId="activeTab"
@@ -123,6 +131,7 @@ export function ActivitiesSection() {
             <ActivityCard
               key={index}
               {...activity}
+              linkLabel={t('activities.learnMore')}
               index={index}
             />
           ))}
