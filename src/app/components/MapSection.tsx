@@ -1,9 +1,25 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { MapPin, Navigation, Car, Plane } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
+const CASA_COORDS = { lat: 45.810573, lng: 8.028934 }; // TODO verify exact coords
+
+declare global {
+  interface Window {
+    google?: {
+      maps?: any;
+    };
+  }
+}
+
 export function MapSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [isMapInteractive, setIsMapInteractive] = useState(false);
+  const [mapLoadError, setMapLoadError] = useState(false);
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const markerRef = useRef<any>(null);
   
   // Custom map style - muted, desaturated, natural colors
   const mapStyles = [
@@ -25,7 +41,150 @@ export function MapSection() {
     { featureType: "water", elementType: "labels.text", stylers: [{ visibility: "off" }] },
   ];
 
-  const mapUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11109.662728347474!2d8.028934!3d45.810573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47842f0d0f0f0f0f%3A0x0!2sAlpe%20di%20Mera!5e0!3m2!1sen!2sit!4v1234567890&style=${encodeURIComponent(JSON.stringify(mapStyles))}`;
+  const addressText = 'Località Alpe di Mera, 1, 13028 Mera (VC)';
+  const addressQuery = encodeURIComponent(addressText);
+  const openMapsUrl = `https://www.google.com/maps/search/?api=1&query=${addressQuery}`;
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${addressQuery}`;
+  const markerLabel = t('map.markerLabel');
+  const iframeSrc = `https://www.google.com/maps?q=${addressQuery}&output=embed`;
+
+  const addressLines = [
+    t('map.address.line1'),
+    t('map.address.line2'),
+    t('map.address.line3'),
+  ];
+
+  const distances = [
+    {
+      icon: Car,
+      label: t('map.distances.milan.label'),
+      value: t('map.distances.milan.value'),
+    },
+    {
+      icon: Car,
+      label: t('map.distances.turin.label'),
+      value: t('map.distances.turin.value'),
+    },
+    {
+      icon: Plane,
+      label: t('map.distances.malpensa.label'),
+      value: t('map.distances.malpensa.value'),
+    },
+    {
+      icon: Navigation,
+      label: t('map.distances.chairlift.label'),
+      value: t('map.distances.chairlift.value'),
+    },
+  ];
+
+  useEffect(() => {
+    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    if (!apiKey) {
+      if (import.meta.env.DEV) {
+        console.warn('VITE_GOOGLE_MAPS_API_KEY is missing. Falling back to iframe.');
+      }
+      setMapLoadError(true);
+      return;
+    }
+
+    if (!mapContainerRef.current) {
+      return;
+    }
+
+    const loadGoogleMaps = () =>
+      new Promise<void>((resolve, reject) => {
+        if (window.google?.maps) {
+          resolve();
+          return;
+        }
+
+        const existingScript = document.getElementById('google-maps-js');
+        if (existingScript) {
+          existingScript.addEventListener('load', () => resolve());
+          existingScript.addEventListener('error', () => reject(new Error('Google Maps failed to load.')));
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.id = 'google-maps-js';
+        script.async = true;
+        script.defer = true;
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=weekly&loading=async&region=IT&language=${language}`;
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error('Google Maps failed to load.'));
+        document.head.appendChild(script);
+      });
+
+    let isMounted = true;
+
+    loadGoogleMaps()
+      .then(() => {
+        if (!isMounted || !mapContainerRef.current || mapInstanceRef.current) {
+          return;
+        }
+        if (!window.google?.maps) {
+          throw new Error('Google Maps not available after load.');
+        }
+
+        const map = new window.google.maps.Map(mapContainerRef.current, {
+          center: CASA_COORDS,
+          zoom: 15,
+          styles: mapStyles,
+          mapTypeControl: false,
+          fullscreenControl: false,
+          streetViewControl: false,
+          zoomControl: true,
+          gestureHandling: 'none',
+          clickableIcons: false,
+        });
+
+        // Marker for Casetta Mera
+        markerRef.current = new window.google.maps.Marker({
+          position: CASA_COORDS,
+          map,
+          title: markerLabel,
+          icon: {
+            path: window.google.maps.SymbolPath.CIRCLE,
+            scale: 7,
+            fillColor: '#677D6A',
+            fillOpacity: 1,
+            strokeColor: '#FFFFFF',
+            strokeWeight: 2,
+          },
+        });
+
+        mapInstanceRef.current = map;
+      })
+      .catch((error) => {
+        if (import.meta.env.DEV) {
+          console.error(error);
+        }
+        setMapLoadError(true);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [language, mapStyles, markerLabel]);
+
+  useEffect(() => {
+    if (!mapInstanceRef.current) {
+      return;
+    }
+
+    mapInstanceRef.current.setOptions({
+      gestureHandling: isMapInteractive ? 'auto' : 'none',
+      scrollwheel: isMapInteractive,
+      draggable: isMapInteractive,
+      keyboardShortcuts: isMapInteractive,
+    });
+  }, [isMapInteractive]);
+
+  useEffect(() => {
+    if (markerRef.current) {
+      markerRef.current.setTitle(markerLabel);
+    }
+  }, [language, markerLabel]);
 
   return (
     <section className="py-24 bg-gradient-to-b from-white to-[var(--almond)]/5">
@@ -48,21 +207,65 @@ export function MapSection() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-3 relative h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl border border-[var(--forest-roast)]/10"
+            className="lg:col-span-3 relative h-[380px] lg:h-[460px] rounded-3xl overflow-hidden shadow-2xl border border-[var(--forest-roast)]/10"
+            aria-label={t('map.ariaLabel')}
           >
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11109.662728347474!2d8.028934!3d45.810573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47842f0d0f0f0f0f%3A0x0!2sAlpe%20di%20Mera!5e0!3m2!1sen!2sit!4v1234567890"
-              width="100%"
-              height="100%"
-              style={{ 
-                border: 0,
-                filter: 'saturate(0.7) contrast(0.9) brightness(1.05)'
-              }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="rounded-3xl"
-            />
+            {!isMapInteractive && (
+              <button
+                type="button"
+                onClick={() => setIsMapInteractive(true)}
+                className="absolute inset-0 z-10 flex items-center justify-center bg-white/10 text-[var(--eclipse)] text-sm font-medium backdrop-blur-[2px]"
+              >
+                <span className="px-4 py-2 rounded-full bg-white/90 shadow-md border border-[var(--forest-roast)]/10">
+                  {t('map.interact')}
+                </span>
+              </button>
+            )}
+
+            <div className="absolute top-4 left-4 z-20 flex flex-wrap gap-2">
+              <a
+                href={openMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/90 text-xs font-medium text-[var(--eclipse)] shadow-md border border-[var(--forest-roast)]/10 hover:bg-white"
+              >
+                {t('map.openInMaps')}
+              </a>
+              <a
+                href={directionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/90 text-xs font-medium text-[var(--eclipse)] shadow-md border border-[var(--forest-roast)]/10 hover:bg-white"
+              >
+                {t('map.directionsCta')}
+              </a>
+            </div>
+
+            {!mapLoadError ? (
+              <div
+                ref={mapContainerRef}
+                className="h-full w-full"
+                aria-label={t('map.embedTitle')}
+                role="application"
+                tabIndex={0}
+              />
+            ) : (
+              <iframe
+                src={iframeSrc}
+                width="100%"
+                height="100%"
+                style={{
+                  border: 0,
+                  filter: 'saturate(0.7) contrast(0.9) brightness(1.05)',
+                  pointerEvents: isMapInteractive ? 'auto' : 'none',
+                }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={t('map.embedTitle')}
+                className="rounded-3xl"
+              />
+            )}
           </motion.div>
 
           {/* Directions - Takes up remaining space (2/5 of the grid) */}
@@ -78,55 +281,38 @@ export function MapSection() {
                   <MapPin className="w-6 h-6 text-[var(--matcha-brew)]" />
                 </div>
                 <div>
-                  <h3 className="text-xl mb-2 text-[var(--eclipse)]">Indirizzo</h3>
-                  <p className="text-[var(--forest-roast)]/70 leading-relaxed">
-                    Via Alpe di Mera, 23<br />
-                    13020 Scopello (VC)<br />
-                    Piemonte, Italia
-                  </p>
+                  <h3 className="text-xl mb-2 text-[var(--eclipse)]">{t('map.address.title')}</h3>
+                  <div className="text-[var(--forest-roast)]/70 leading-relaxed space-y-1">
+                    {addressLines.map((line, index) => (
+                      <div key={index}>{line}</div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="bg-white rounded-3xl p-8 shadow-lg border border-[var(--forest-roast)]/5">
-              <h3 className="text-xl mb-6 text-[var(--eclipse)]">Distanze</h3>
+              <h3 className="text-xl mb-6 text-[var(--eclipse)]">{t('map.distances.title')}</h3>
               <div className="space-y-5">
-                <div className="flex items-center gap-4 pb-4 border-b border-[var(--forest-roast)]/5">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--almond)]/20 flex items-center justify-center flex-shrink-0">
-                    <Car className="w-5 h-5 text-[var(--matcha-brew)]" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-[var(--eclipse)] font-medium">Da Milano</p>
-                    <p className="text-sm text-[var(--forest-roast)]/60">2h 15min (150 km)</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 pb-4 border-b border-[var(--forest-roast)]/5">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--almond)]/20 flex items-center justify-center flex-shrink-0">
-                    <Car className="w-5 h-5 text-[var(--matcha-brew)]" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-[var(--eclipse)] font-medium">Da Torino</p>
-                    <p className="text-sm text-[var(--forest-roast)]/60">1h 45min (120 km)</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 pb-4 border-b border-[var(--forest-roast)]/5">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--almond)]/20 flex items-center justify-center flex-shrink-0">
-                    <Plane className="w-5 h-5 text-[var(--matcha-brew)]" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-[var(--eclipse)] font-medium">Aeroporto Malpensa</p>
-                    <p className="text-sm text-[var(--forest-roast)]/60">1h 50min (110 km)</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--almond)]/20 flex items-center justify-center flex-shrink-0">
-                    <Navigation className="w-5 h-5 text-[var(--matcha-brew)]" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-[var(--eclipse)] font-medium">Impianti di risalita</p>
-                    <p className="text-sm text-[var(--forest-roast)]/60">200 metri a piedi</p>
-                  </div>
-                </div>
+                {distances.map((distance, index) => {
+                  const Icon = distance.icon;
+                  const showDivider = index < distances.length - 1;
+
+                  return (
+                    <div
+                      key={distance.label}
+                      className={`flex items-center gap-4 ${showDivider ? 'pb-4 border-b border-[var(--forest-roast)]/5' : ''}`}
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-[var(--almond)]/20 flex items-center justify-center flex-shrink-0">
+                        <Icon className="w-5 h-5 text-[var(--matcha-brew)]" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-[var(--eclipse)] font-medium">{distance.label}</p>
+                        <p className="text-sm text-[var(--forest-roast)]/60">{distance.value}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </motion.div>

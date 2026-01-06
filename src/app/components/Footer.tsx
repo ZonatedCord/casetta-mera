@@ -81,9 +81,9 @@ export function Footer() {
             <div className="flex items-start gap-3 text-white/70">
               <MapPin className="w-5 h-5 flex-shrink-0 mt-1" />
               <address className="not-italic leading-relaxed">
-                Via Alpe di Mera, 23<br />
-                13020 Scopello (VC)<br />
-                Piemonte, Italia
+                {t('footer.address.line1')}<br />
+                {t('footer.address.line2')}<br />
+                {t('footer.address.line3')}
               </address>
             </div>
           </div>

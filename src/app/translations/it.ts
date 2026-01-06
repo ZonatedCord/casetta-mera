@@ -171,9 +171,26 @@ export const it = {
         alt: 'Ciaspole all\'Alpe di Mera',
       },
       playground: {
-        title: 'Parco giochi & Area Bob',
-        description: 'Divertimento per famiglie tra giochi sulla neve e discese in bob.',
-        alt: 'Parco giochi sulla neve e area bob',
+        title: 'Area Bob',
+        description: 'Discese in bob e slittino per tutte le età.',
+        alt: 'Area bob all\'Alpe di Mera',
+      },
+    },
+    summerCards: {
+      hiking: {
+        title: 'Trekking & Passeggiate',
+        description: 'Sentieri panoramici adatti anche a famiglie e bambini.',
+        alt: 'Passeggiate panoramiche all\'Alpe di Mera',
+      },
+      bike: {
+        title: 'Mountain Bike & E-Bike',
+        description: 'Percorsi MTB tra boschi e prati a 1.500 metri.',
+        alt: 'Mountain bike all\'Alpe di Mera',
+      },
+      rafting: {
+        title: 'Rafting in Valsesia',
+        description: 'Avventura sul fiume Sesia, a pochi minuti dall\'Alpe.',
+        alt: 'Rafting sul fiume Sesia',
       },
     },
     skiing: {
@@ -275,8 +292,37 @@ export const it = {
   map: {
     title: 'Come Raggiungerci',
     subtitle: 'Casetta Mera si trova nel cuore dell\'Alpe di Mera',
-    directions: 'Ottieni indicazioni',
-    location: 'Alpe di Mera, Scopello (VC), Italia',
+    embedTitle: 'Mappa di Casetta Mera',
+    ariaLabel: 'Mappa e distanze di Casetta Mera',
+    openInMaps: 'Apri in Google Maps',
+    directionsCta: 'Indicazioni',
+    interact: 'Clicca per interagire',
+    markerLabel: 'Casetta Mera',
+    address: {
+      title: 'Indirizzo',
+      line1: 'Località Alpe di Mera, 1',
+      line2: '13028 Mera (VC)',
+      line3: 'Piemonte, Italia',
+    },
+    distances: {
+      title: 'Distanze',
+      milan: {
+        label: 'Da Milano',
+        value: '2h 15min (150 km)',
+      },
+      turin: {
+        label: 'Da Torino',
+        value: '1h 45min (120 km)',
+      },
+      malpensa: {
+        label: 'Aeroporto Malpensa',
+        value: '1h 50min (110 km)',
+      },
+      chairlift: {
+        label: 'Seggiovia Scopello ↔ Mera',
+        value: 'circa 50 m dalla casetta (arrivo a Mera)',
+      },
+    },
   },
 
   // Quote Form Modal
@@ -336,8 +382,11 @@ export const it = {
     contacts: 'Contatti',
     whatsapp: 'WhatsApp',
     location: 'Posizione',
-    address: 'Alpe di Mera, Scopello',
-    city: 'Vercelli, Italia',
+    address: {
+      line1: 'Località Alpe di Mera, 1',
+      line2: '13028 Mera (VC)',
+      line3: 'Piemonte, Italia',
+    },
     quickLinks: 'Link Rapidi',
     about: 'Chi Siamo',
     privacy: 'Privacy Policy',

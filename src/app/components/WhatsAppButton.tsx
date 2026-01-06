@@ -13,7 +13,7 @@ export function WhatsAppButton() {
   return (
     <>
       {/* Desktop version - bottom right */}
-      <div className="hidden md:block fixed bottom-8 right-8 z-50">
+      <div className="hidden md:block fixed bottom-8 right-8 z-50 bg-transparent rounded-full shadow-none overflow-visible">
         <AnimatePresence>
           {isExpanded && (
             <motion.div
@@ -54,7 +54,7 @@ export function WhatsAppButton() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-16 h-16 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-2xl flex items-center justify-center transition-colors"
+          className="w-16 h-16 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-2xl flex items-center justify-center transition-colors border-0 outline-none ring-0 focus:outline-none focus:ring-0 overflow-hidden bg-clip-padding isolate will-change-transform"
           aria-label="Contattaci su WhatsApp"
         >
           <MessageCircle className="w-7 h-7" />
@@ -66,7 +66,7 @@ export function WhatsAppButton() {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="md:hidden fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-2xl flex items-center justify-center transition-colors"
+        className="md:hidden fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-2xl flex items-center justify-center transition-colors border-0 outline-none ring-0 focus:outline-none focus:ring-0 overflow-hidden bg-clip-padding isolate will-change-transform before:content-none after:content-none hover:scale-[1.03] active:scale-[0.98] transition-transform"
         aria-label="Contattaci su WhatsApp"
       >
         <MessageCircle className="w-6 h-6" />

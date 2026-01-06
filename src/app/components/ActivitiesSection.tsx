@@ -34,25 +34,25 @@ export function ActivitiesSection() {
 
   const summerActivities = [
     {
-      title: 'Trekking & Escursioni',
-      description: 'Centinaia di sentieri escursionistici per tutti i livelli, con rifugi alpini lungo il percorso.',
-      image: 'https://images.unsplash.com/photo-1648847673583-5c8afff8527a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbHBpbmUlMjBoaWtpbmclMjB0cmFpbHxlbnwxfHx8fDE3NjY5NjM4NTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      alt: 'Trekking in montagna',
-      link: '#'
+      title: t('activities.summerCards.hiking.title'),
+      description: t('activities.summerCards.hiking.description'),
+      image: '/trekking.jpg',
+      alt: t('activities.summerCards.hiking.alt'),
+      link: 'https://alpedimera.it/alpe-di-mera-estate-famiglia-22178'
     },
     {
-      title: 'Mountain Bike',
-      description: 'Tracciati MTB per downhill e cross-country con noleggio bici disponibile.',
-      image: 'https://images.unsplash.com/photo-1604677657548-4ced0c4f40c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGJpa2UlMjB0cmFpbHxlbnwxfHx8fDE3NjY5NjM4NTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      alt: 'Mountain bike sui sentieri alpini',
-      link: '#'
+      title: t('activities.summerCards.bike.title'),
+      description: t('activities.summerCards.bike.description'),
+      image: '/mtb.jpeg',
+      alt: t('activities.summerCards.bike.alt'),
+      link: 'https://www.skiforum.it/alpedimera/estate.html'
     },
     {
-      title: 'Rifugi Alpini',
-      description: 'Visita i rifugi storici della zona per gustare la cucina alpina tradizionale.',
-      image: 'https://images.unsplash.com/photo-1756156263665-8e4aa121b642?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbHBpbmUlMjBtb3VudGFpbiUyMGNhYmlufGVufDF8fHx8MTc2Njk2Mzg0OHww&ixlib=rb-4.1.0&q=80&w=1080',
-      alt: 'Rifugio alpino in montagna',
-      link: '#'
+      title: t('activities.summerCards.rafting.title'),
+      description: t('activities.summerCards.rafting.description'),
+      image: '/rafting.jpg',
+      alt: t('activities.summerCards.rafting.alt'),
+      link: 'https://www.valsesiasport.it/'
     }
   ];
 

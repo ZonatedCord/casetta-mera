@@ -171,9 +171,26 @@ export const en = {
         alt: 'Snowshoeing in Alpe di Mera',
       },
       playground: {
-        title: 'Playground & Bob Area',
-        description: 'Family fun with snow games and bob sled runs.',
-        alt: 'Snow playground and bob area',
+        title: 'Bob Area',
+        description: 'Sled runs for all ages.',
+        alt: 'Bob area in Alpe di Mera',
+      },
+    },
+    summerCards: {
+      hiking: {
+        title: 'Trekking & Walks',
+        description: 'Scenic trails suitable for families and beginners.',
+        alt: 'Panoramic walks in Alpe di Mera',
+      },
+      bike: {
+        title: 'Mountain Bike & E-Bike',
+        description: 'MTB routes through woods and alpine meadows.',
+        alt: 'Mountain biking in Alpe di Mera',
+      },
+      rafting: {
+        title: 'Rafting in Valsesia',
+        description: 'River adventure on the Sesia, just minutes away.',
+        alt: 'Rafting on the Sesia river',
       },
     },
     skiing: {
@@ -275,8 +292,37 @@ export const en = {
   map: {
     title: 'How to Reach Us',
     subtitle: 'Casetta Mera is located in the heart of Alpe di Mera',
-    directions: 'Get directions',
-    location: 'Alpe di Mera, Scopello (VC), Italy',
+    embedTitle: 'Casetta Mera map',
+    ariaLabel: 'Casetta Mera map and distances',
+    openInMaps: 'Open in Google Maps',
+    directionsCta: 'Directions',
+    interact: 'Click to interact',
+    markerLabel: 'Casetta Mera',
+    address: {
+      title: 'Address',
+      line1: 'Località Alpe di Mera, 1',
+      line2: '13028 Mera (VC)',
+      line3: 'Piedmont, Italy',
+    },
+    distances: {
+      title: 'Distances',
+      milan: {
+        label: 'From Milan',
+        value: '2h 15min (150 km)',
+      },
+      turin: {
+        label: 'From Turin',
+        value: '1h 45min (120 km)',
+      },
+      malpensa: {
+        label: 'Malpensa Airport',
+        value: '1h 50min (110 km)',
+      },
+      chairlift: {
+        label: 'Scopello ↔ Mera chairlift',
+        value: 'about 50 m from the chalet (Mera top station)',
+      },
+    },
   },
 
   // Quote Form Modal
@@ -336,8 +382,11 @@ export const en = {
     contacts: 'Contact',
     whatsapp: 'WhatsApp',
     location: 'Location',
-    address: 'Alpe di Mera, Scopello',
-    city: 'Vercelli, Italy',
+    address: {
+      line1: 'Località Alpe di Mera, 1',
+      line2: '13028 Mera (VC)',
+      line3: 'Piedmont, Italy',
+    },
     quickLinks: 'Quick Links',
     about: 'About Us',
     privacy: 'Privacy Policy',
