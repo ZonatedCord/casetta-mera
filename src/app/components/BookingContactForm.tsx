@@ -7,6 +7,8 @@ import { Checkbox } from './ui/checkbox';
 import { Label } from './ui/label';
 import { Send, Shield, Clock } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from '../lib/supabaseClient';
+import { toIsoDate } from '../lib/availability';
 
 interface BookingContactFormProps {
   bookingDetails?: {
@@ -39,10 +41,28 @@ export function BookingContactForm({ bookingDetails }: BookingContactFormProps) 
     }
 
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
+    const payload = {
+      name: `${formData.firstName} ${formData.lastName}`.trim(),
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message || null,
+      check_in: bookingDetails?.checkIn ? toIsoDate(bookingDetails.checkIn) : null,
+      check_out: bookingDetails?.checkOut ? toIsoDate(bookingDetails.checkOut) : null,
+      guests: bookingDetails?.guests ?? null,
+      source: 'form',
+      status: 'new',
+    };
+
+    const { error } = await supabase.from('inquiries').insert(payload);
+
+    if (error) {
+      console.error('Supabase insert inquiries failed', error.message);
+      toast.error('Errore durante l’invio. Riprova più tardi.');
+      setIsSubmitting(false);
+      return;
+    }
+
     toast.success('Richiesta inviata! Ti contatteremo entro 24 ore.');
     
     // Reset form

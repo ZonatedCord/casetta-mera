@@ -1,70 +1,62 @@
-import { useState } from 'react';
-import { Calendar } from './ui/calendar';
-import { format, isSameDay, eachDayOfInterval, addMonths, startOfMonth } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { format, isSameDay, addMonths, startOfMonth, endOfMonth } from 'date-fns';
 import { it } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'motion/react';
+import {
+  expandBlockedDates,
+  expandDateRange,
+  fetchAvailability,
+  fetchNightlyPrices,
+  toIsoDate,
+} from '../lib/availability';
 
 interface AirbnbCalendarProps {
   onDateSelect: (checkIn: Date | undefined, checkOut: Date | undefined) => void;
   selectedCheckIn?: Date;
   selectedCheckOut?: Date;
+  onDataLoaded?: (blockedDates: Set<string>, priceMap: Map<string, number>) => void;
 }
 
-// Price data by date (in a real app, this would come from an API)
-const getPriceForDate = (date: Date): number => {
-  const month = date.getMonth();
-  const day = date.getDate();
-  
-  // Mock booked dates
-  const bookedDates = [
-    new Date(2025, 0, 5),
-    new Date(2025, 0, 6),
-    new Date(2025, 0, 15),
-    new Date(2025, 0, 16),
-    new Date(2025, 0, 17),
-    new Date(2025, 1, 10),
-    new Date(2025, 1, 11),
-  ];
-  
-  const isBooked = bookedDates.some(d => isSameDay(d, date));
-  if (isBooked) return 0; // 0 means unavailable
-  
-  // Alta stagione: Dicembre-Marzo (inverno) e Luglio-Agosto (estate)
-  if ((month >= 0 && month <= 2) || (month === 11) || (month === 6 || month === 7)) {
-    return 180;
-  }
-  // Bassa stagione: Aprile-Maggio e Settembre-Novembre
-  else if (month === 3 || month === 4 || month === 8 || month === 9 || month === 10) {
-    return 120;
-  }
-  // Media stagione
-  return 150;
-};
-
-const isDateBooked = (date: Date): boolean => {
-  const bookedDates = [
-    new Date(2025, 0, 5),
-    new Date(2025, 0, 6),
-    new Date(2025, 0, 15),
-    new Date(2025, 0, 16),
-    new Date(2025, 0, 17),
-    new Date(2025, 1, 10),
-    new Date(2025, 1, 11),
-  ];
-  
-  return bookedDates.some(d => isSameDay(d, date));
-};
-
-export function AirbnbCalendar({ onDateSelect, selectedCheckIn, selectedCheckOut }: AirbnbCalendarProps) {
+export function AirbnbCalendar({
+  onDateSelect,
+  selectedCheckIn,
+  selectedCheckOut,
+  onDataLoaded,
+}: AirbnbCalendarProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
+  const [blockedDates, setBlockedDates] = useState<Set<string>>(new Set());
+  const [priceMap, setPriceMap] = useState<Map<string, number>>(new Map());
+
+  useEffect(() => {
+    const rangeStart = startOfMonth(currentMonth);
+    const rangeEnd = endOfMonth(addMonths(currentMonth, 1));
+
+    const loadData = async () => {
+      try {
+        const [blocks, prices] = await Promise.all([
+          fetchAvailability(rangeStart, rangeEnd),
+          fetchNightlyPrices(rangeStart, rangeEnd),
+        ]);
+        const nextBlocked = expandBlockedDates(blocks);
+        setBlockedDates(nextBlocked);
+        setPriceMap(prices);
+        onDataLoaded?.(nextBlocked, prices);
+      } catch (error) {
+        setBlockedDates(new Set());
+        setPriceMap(new Map());
+      }
+    };
+
+    loadData();
+  }, [currentMonth, onDataLoaded]);
 
   const handleDateClick = (date: Date | undefined) => {
     if (!date) return;
     
     // Don't allow selecting booked dates
-    if (isDateBooked(date)) return;
+    if (blockedDates.has(toIsoDate(date))) return;
     
     // If no check-in selected, or if both are selected, start fresh
     if (!selectedCheckIn || (selectedCheckIn && selectedCheckOut)) {
@@ -76,6 +68,9 @@ export function AirbnbCalendar({ onDateSelect, selectedCheckIn, selectedCheckOut
       if (date < selectedCheckIn) {
         onDateSelect(date, undefined);
       } else {
+        const rangeDates = expandDateRange(selectedCheckIn, date);
+        const hasBlocked = rangeDates.some((day) => blockedDates.has(day));
+        if (hasBlocked) return;
         // Otherwise set it as check-out
         onDateSelect(selectedCheckIn, date);
       }
@@ -147,7 +142,6 @@ export function AirbnbCalendar({ onDateSelect, selectedCheckIn, selectedCheckOut
           const monthEnd = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
           const startDate = new Date(monthStart);
           startDate.setDate(startDate.getDate() - (startDate.getDay() || 7) + 1);
-          const endDate = new Date(monthEnd);
           const daysToShow = 42; // 6 weeks
           const dates: Date[] = [];
           
@@ -160,8 +154,8 @@ export function AirbnbCalendar({ onDateSelect, selectedCheckIn, selectedCheckOut
           return dates.map((date) => {
             const isCurrentMonth = date.getMonth() === currentMonth.getMonth();
             const isPast = date < new Date(new Date().setHours(0, 0, 0, 0));
-            const price = getPriceForDate(date);
-            const isBooked = price === 0;
+            const price = priceMap.get(toIsoDate(date));
+            const isBooked = blockedDates.has(toIsoDate(date));
             const isDisabled = isPast || isBooked || !isCurrentMonth;
             const inRange = isInRange(date);
             const rangeStart = isRangeStart(date);
@@ -182,15 +176,21 @@ export function AirbnbCalendar({ onDateSelect, selectedCheckIn, selectedCheckOut
                   ${rangeStart || rangeEnd ? 'bg-[var(--matcha-brew)] text-white' : ''}
                   ${inRange ? 'bg-[var(--matcha-brew)]/10' : ''}
                   ${!isDisabled && !rangeStart && !rangeEnd && !inRange ? 'hover:bg-[var(--almond)]/20' : ''}
-                  ${isBooked ? 'bg-[var(--forest-roast)]/5' : ''}
+                  ${isBooked ? 'bg-[var(--matcha-brew)]/10 text-[var(--matcha-brew)]' : ''}
                 `}
               >
                 <span className={`text-sm mb-1 ${rangeStart || rangeEnd ? 'font-semibold' : ''}`}>
                   {date.getDate()}
                 </span>
                 {isCurrentMonth && !isPast && (
-                  <span className={`text-xs ${rangeStart || rangeEnd ? 'text-white' : isBooked ? 'text-[var(--forest-roast)]/40 line-through' : 'text-[var(--forest-roast)]/60'}`}>
-                    {isBooked ? '—' : `€${price}`}
+                  <span className="text-xs">
+                    {isBooked ? (
+                      <span className="inline-flex h-2 w-2 rounded-full bg-[var(--matcha-brew)]" />
+                    ) : price ? (
+                      <span className={rangeStart || rangeEnd ? 'text-white' : 'text-[var(--forest-roast)]/60'}>
+                        €{price}
+                      </span>
+                    ) : null}
                   </span>
                 )}
               </button>
@@ -210,7 +210,7 @@ export function AirbnbCalendar({ onDateSelect, selectedCheckIn, selectedCheckOut
           <span>Nel periodo</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-[var(--forest-roast)]/5" />
+          <div className="h-2 w-2 rounded-full bg-[var(--matcha-brew)]" />
           <span>Non disponibile</span>
         </div>
       </div>

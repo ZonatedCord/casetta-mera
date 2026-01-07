@@ -325,6 +325,125 @@ export const en = {
     },
   },
 
+  // Terms & Conditions Page
+  terms: {
+    title: 'Terms and Conditions',
+    lastUpdated: 'Last updated: 07/01/2026',
+    sections: {
+      object: {
+        title: '1. Subject',
+        body: 'These Terms and Conditions govern quote requests, stays at Casetta Mera, and use of the website.',
+      },
+      quote: {
+        title: '2. Quote request and confirmation',
+        body: 'Submitting forms or contacting us via WhatsApp or email is a request for information. A booking is confirmed only after written confirmation by the Property and any required deposit.',
+      },
+      pricing: {
+        title: '3. Prices and payments',
+        body: 'Prices vary by season, number of guests, and length of stay. Payment methods are indicated in the quote.',
+      },
+      checkin: {
+        title: '4. Check-in and check-out',
+        body: 'Times are communicated at confirmation. Any changes must be agreed in advance.',
+      },
+      houseRules: {
+        title: '5. House rules',
+        body: 'Only the listed guests may stay. Respect for the home, neighbors, and environment is required. Parties or unauthorized events are not allowed.',
+      },
+      pets: {
+        title: '6. Pets',
+        body: 'Pets are allowed only if agreed during the request phase.',
+      },
+      accessibility: {
+        title: '7. Accessibility',
+        body: 'The property is equipped for guests with mobility impairments. For specific needs, please contact us before confirmation.',
+      },
+      cancellations: {
+        title: '8. Cancellations',
+        body: 'Cancellation terms are indicated in the quote or confirmation.',
+      },
+      liability: {
+        title: '9. Liability',
+        body: 'Guests are responsible for any damages. The Property is not liable for personal belongings.',
+      },
+      website: {
+        title: '10. Website use',
+        body: 'Content is provided for informational purposes and may be updated.',
+      },
+    },
+  },
+
+  // Privacy Policy Page
+  privacy: {
+    title: 'Privacy Policy',
+    lastUpdated: 'Last updated: 07/01/2026',
+    sections: {
+      controller: {
+        title: '1. Data controller',
+        body: 'The data controller is Casetta Mera.',
+      },
+      data: {
+        title: '2. Data collected',
+        body: 'Name, email, phone, messages, stay details, and technical browsing data.',
+      },
+      purpose: {
+        title: '3. Purpose and legal basis',
+        body: 'We process data to reply to requests, manage stays, meet legal obligations, and ensure security. Marketing only with consent.',
+      },
+      retention: {
+        title: '4. Retention',
+        body: 'Data is kept for the time necessary for the stated purposes and legal obligations.',
+      },
+      sharing: {
+        title: '5. Sharing',
+        body: 'Shared with technical providers and advisors only when necessary. We do not sell personal data.',
+      },
+      rights: {
+        title: '6. Rights',
+        body: 'Access, rectification, erasure, restriction, objection, portability, and complaint to the Data Protection Authority.',
+      },
+      cookies: {
+        title: '7. Cookies',
+        body: 'We use technical cookies and, where present, third-party cookies according to configuration.',
+      },
+    },
+  },
+
+  // FAQ Page
+  faqPage: {
+    title: 'FAQ',
+    items: {
+      checkin: {
+        q: 'Check-in and check-out',
+        a: 'Times are shared at confirmation.',
+      },
+      parking: {
+        q: 'Parking',
+        a: 'Available in summer (seasonal).',
+      },
+      lifts: {
+        q: 'Chairlift',
+        a: 'The Scopello ↔ Mera chairlift is about 50 m from the chalet.',
+      },
+      accessibility: {
+        q: 'Accessibility',
+        a: 'The house is wheelchair accessible, with an equipped shower.',
+      },
+      pets: {
+        q: 'Pets',
+        a: 'Allowed, please mention them when requesting.',
+      },
+      linens: {
+        q: 'Linens',
+        a: 'Bed linen, towels and blankets included.',
+      },
+      skiStorage: {
+        q: 'Ski storage',
+        a: 'Space available for skis and gear.',
+      },
+    },
+  },
+
   // Quote Form Modal
   quoteForm: {
     title: 'Quote Request',

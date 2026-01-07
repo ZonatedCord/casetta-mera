@@ -92,13 +92,13 @@ export function Footer() {
           <div>
             <h4 className="mb-4">{t('footer.quickLinks')}</h4>
             <div className="space-y-2">
-              <a href="#" className="block text-white/70 hover:text-white transition-colors">
+              <a href="/termini-e-condizioni" className="block text-white/70 hover:text-white transition-colors">
                 {t('footer.terms')}
               </a>
-              <a href="#" className="block text-white/70 hover:text-white transition-colors">
+              <a href="/privacy-policy" className="block text-white/70 hover:text-white transition-colors">
                 {t('footer.privacy')}
               </a>
-              <a href="#" className="block text-white/70 hover:text-white transition-colors">
+              <a href="/faq" className="block text-white/70 hover:text-white transition-colors">
                 FAQ
               </a>
             </div>

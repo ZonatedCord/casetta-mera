@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { WhySection } from './components/WhySection';
@@ -20,10 +20,24 @@ import { Toaster } from './components/ui/sonner';
 import { LanguageProvider } from './context/LanguageContext';
 import { it } from './translations/it';
 import { en } from './translations/en';
+import { TermsPage } from './pages/TermsPage';
+import { PrivacyPage } from './pages/PrivacyPage';
+import { FaqPage } from './pages/FaqPage';
+import { AdminApp } from './admin/AdminApp';
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState('home');
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [pathname, setPathname] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setPathname(window.location.pathname);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Refs for scrolling
   const homeRef = useRef<HTMLDivElement>(null);
@@ -33,6 +47,11 @@ export default function App() {
   const contactsRef = useRef<HTMLDivElement>(null);
 
   const handleNavigate = (section: string) => {
+    if (pathname !== '/') {
+      window.location.href = '/';
+      return;
+    }
+
     setCurrentSection(section);
     
     const refs: { [key: string]: React.RefObject<HTMLDivElement> } = {
@@ -51,81 +70,103 @@ export default function App() {
     }
   };
 
+  const legalPages: Record<string, JSX.Element> = {
+    '/termini-e-condizioni': <TermsPage />,
+    '/privacy-policy': <PrivacyPage />,
+    '/faq': <FaqPage />,
+  };
+
+  const legalPage = legalPages[pathname];
+
+  if (pathname.startsWith('/admin')) {
+    return <AdminApp pathname={pathname} onNavigate={setPathname} />;
+  }
+
   return (
     <LanguageProvider translations={{ it, en }}>
       <div className="min-h-screen bg-white pb-20 md:pb-0">
         {/* Navbar */}
         <Navbar onNavigate={handleNavigate} currentSection={currentSection} />
 
-        {/* Hero Section */}
-        <div ref={homeRef}>
-          <Hero
-            onNavigateToAvailability={() => handleNavigate('availability')}
-            onOpenQuoteForm={() => setIsQuoteModalOpen(true)}
-          />
-        </div>
+        {legalPage ? (
+          <>
+            {legalPage}
+            <Footer />
+            <WhatsAppButton />
+          </>
+        ) : (
+          <>
+            {/* Hero Section */}
+            <div ref={homeRef}>
+              <Hero
+                onNavigateToAvailability={() => handleNavigate('availability')}
+                onOpenQuoteForm={() => setIsQuoteModalOpen(true)}
+              />
+            </div>
 
-        {/* Why Section */}
-        <WhySection />
+            {/* Why Section */}
+            <WhySection />
 
-        {/* Perfect For Section - NEW */}
-        <PerfectForSection />
+            {/* Perfect For Section - NEW */}
+            <PerfectForSection />
 
-        {/* Stats Section */}
-        <StatsSection />
+            {/* Stats Section */}
+            <StatsSection />
 
-        {/* Gallery Section */}
-        <GallerySection />
+            {/* Gallery Section */}
+            <GallerySection />
 
-        {/* Services Section */}
-        <div ref={servicesRef}>
-          <ServicesSection />
-        </div>
+            {/* Services Section */}
+            <div ref={servicesRef}>
+              <ServicesSection />
+            </div>
 
-        {/* Activities Section */}
-        <div ref={activitiesRef}>
-          <ActivitiesSection />
-        </div>
+            {/* Activities Section */}
+            <div ref={activitiesRef}>
+              <ActivitiesSection />
+            </div>
 
-        {/* Availability Section */}
-        <div ref={availabilityRef}>
-          <AvailabilitySection />
-        </div>
+            {/* Availability Section */}
+            <div ref={availabilityRef}>
+              <AvailabilitySection />
+            </div>
 
-        {/* House Rules & FAQ Section - NEW */}
-        <HouseRulesFAQSection />
+            {/* House Rules & FAQ Section - NEW */}
+            <HouseRulesFAQSection />
 
-        {/* Testimonials Section */}
-        <TestimonialsSection />
+            {/* Testimonials Section */}
+            <TestimonialsSection />
 
-        {/* Map Section */}
-        <div ref={contactsRef}>
-          <MapSection />
-        </div>
+            {/* Map Section */}
+            <div ref={contactsRef}>
+              <MapSection />
+            </div>
 
-        {/* Footer */}
-        <Footer />
+            {/* Footer */}
+            <Footer />
 
-        {/* Quote Form Modal */}
-        <QuoteFormModal
-          isOpen={isQuoteModalOpen}
-          onClose={() => setIsQuoteModalOpen(false)}
-        />
+            {/* Quote Form Modal */}
+            <QuoteFormModal
+              isOpen={isQuoteModalOpen}
+              onClose={() => setIsQuoteModalOpen(false)}
+            />
 
-        {/* Mobile Bottom Bar */}
-        <MobileBottomBar
-          onNavigateToAvailability={() => handleNavigate('availability')}
-          onOpenQuoteForm={() => setIsQuoteModalOpen(true)}
-        />
+            {/* Mobile Bottom Bar */}
+            <MobileBottomBar
+              onNavigateToAvailability={() => handleNavigate('availability')}
+              onOpenQuoteForm={() => setIsQuoteModalOpen(true)}
+            />
 
-        {/* Back to Top Button */}
-        <BackToTop />
+            {/* Back to Top Button */}
+            <BackToTop />
 
-        {/* WhatsApp Button */}
-        <WhatsAppButton />
+            {/* WhatsApp Button */}
+            <WhatsAppButton />
 
-        {/* Toast Notifications */}
-        <Toaster />
+            {/* Toast Notifications */}
+            <Toaster />
+          </>
+        )}
       </div>
     </LanguageProvider>
   );

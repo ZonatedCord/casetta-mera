@@ -325,6 +325,125 @@ export const it = {
     },
   },
 
+  // Terms & Conditions Page
+  terms: {
+    title: 'Termini e Condizioni',
+    lastUpdated: 'Ultimo aggiornamento: 07/01/2026',
+    sections: {
+      object: {
+        title: '1. Oggetto',
+        body: 'I presenti Termini e Condizioni disciplinano la richiesta di preventivo, il soggiorno presso Casetta Mera e l\'utilizzo del sito web.',
+      },
+      quote: {
+        title: '2. Richiesta di preventivo e conferma',
+        body: 'La compilazione dei moduli o il contatto via WhatsApp o email costituiscono richiesta di informazioni. La prenotazione è confermata solo dopo conferma scritta da parte della Struttura ed eventuale caparra.',
+      },
+      pricing: {
+        title: '3. Prezzi e pagamenti',
+        body: 'I prezzi variano in base a stagione, numero di ospiti e durata. Le modalità di pagamento sono indicate nel preventivo.',
+      },
+      checkin: {
+        title: '4. Check-in e check-out',
+        body: 'Gli orari sono comunicati in fase di conferma. Eventuali variazioni vanno concordate.',
+      },
+      houseRules: {
+        title: '5. Regole della casa',
+        body: 'Solo gli ospiti indicati possono soggiornare. È richiesto rispetto per casa, vicinato e ambiente. Vietate feste o eventi non autorizzati.',
+      },
+      pets: {
+        title: '6. Animali',
+        body: 'Gli animali sono ammessi solo se concordati in fase di richiesta.',
+      },
+      accessibility: {
+        title: '7. Accessibilità',
+        body: 'La struttura è attrezzata per persone con disabilità motorie. Per esigenze specifiche è consigliato contattarci prima della conferma.',
+      },
+      cancellations: {
+        title: '8. Cancellazioni',
+        body: 'Le condizioni di cancellazione sono indicate nel preventivo o nella conferma.',
+      },
+      liability: {
+        title: '9. Responsabilità',
+        body: 'Gli ospiti rispondono di eventuali danni arrecati. La Struttura non è responsabile per oggetti personali.',
+      },
+      website: {
+        title: '10. Uso del sito',
+        body: 'I contenuti hanno scopo informativo e possono essere aggiornati.',
+      },
+    },
+  },
+
+  // Privacy Policy Page
+  privacy: {
+    title: 'Privacy Policy',
+    lastUpdated: 'Ultimo aggiornamento: 07/01/2026',
+    sections: {
+      controller: {
+        title: '1. Titolare del trattamento',
+        body: 'Il titolare del trattamento è Casetta Mera.',
+      },
+      data: {
+        title: '2. Dati raccolti',
+        body: 'Nome, email, telefono, messaggi, dati di soggiorno, dati tecnici di navigazione.',
+      },
+      purpose: {
+        title: '3. Finalità e base giuridica',
+        body: 'Risposta a richieste, gestione soggiorni, obblighi legali e sicurezza. Marketing solo con consenso.',
+      },
+      retention: {
+        title: '4. Conservazione',
+        body: 'I dati sono conservati per il tempo necessario alle finalità indicate e agli obblighi di legge.',
+      },
+      sharing: {
+        title: '5. Condivisione',
+        body: 'Con fornitori tecnici e consulenti, solo se necessario. Nessuna vendita dati.',
+      },
+      rights: {
+        title: '6. Diritti',
+        body: 'Accesso, rettifica, cancellazione, limitazione, opposizione, portabilità, reclamo al Garante.',
+      },
+      cookies: {
+        title: '7. Cookie',
+        body: 'Uso di cookie tecnici e, se presenti, cookie di terze parti secondo configurazione.',
+      },
+    },
+  },
+
+  // FAQ Page
+  faqPage: {
+    title: 'FAQ',
+    items: {
+      checkin: {
+        q: 'Check-in e check-out',
+        a: 'Gli orari vengono comunicati alla conferma.',
+      },
+      parking: {
+        q: 'Parcheggio',
+        a: 'Disponibile in estate (stagionale).',
+      },
+      lifts: {
+        q: 'Impianti di risalita',
+        a: 'La seggiovia Scopello ↔ Mera è a circa 50 metri dalla casetta.',
+      },
+      accessibility: {
+        q: 'Accessibilità',
+        a: 'La casa è accessibile anche in carrozzina, con doccia attrezzata.',
+      },
+      pets: {
+        q: 'Animali',
+        a: 'Ammessi, da indicare in fase di richiesta.',
+      },
+      linens: {
+        q: 'Biancheria',
+        a: 'Lenzuola, asciugamani e coperte incluse.',
+      },
+      skiStorage: {
+        q: 'Deposito sci',
+        a: 'Spazio disponibile per sci e attrezzatura.',
+      },
+    },
+  },
+
   // Quote Form Modal
   quoteForm: {
     title: 'Richiesta di Preventivo',

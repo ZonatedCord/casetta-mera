@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { addDays } from 'date-fns';
 import { motion } from 'motion/react';
 import { AirbnbCalendar } from './AirbnbCalendar';
 import { GuestSelector } from './GuestSelector';
@@ -6,6 +7,7 @@ import { PriceBreakdown } from './PriceBreakdown';
 import { BookingContactForm } from './BookingContactForm';
 import { Button } from './ui/button';
 import { Calendar, Users, ArrowDown } from 'lucide-react';
+import { toIsoDate } from '../lib/availability';
 
 export function AvailabilitySection() {
   const [checkIn, setCheckIn] = useState<Date | undefined>();
@@ -15,6 +17,11 @@ export function AvailabilitySection() {
   const [pets, setPets] = useState(0);
   const [showPriceBreakdown, setShowPriceBreakdown] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
+  const [priceMap, setPriceMap] = useState<Map<string, number>>(new Map());
+
+  const handleCalendarData = useCallback((_: Set<string>, prices: Map<string, number>) => {
+    setPriceMap(prices);
+  }, []);
 
   const handleDateSelect = (checkInDate: Date | undefined, checkOutDate: Date | undefined) => {
     setCheckIn(checkInDate);
@@ -34,9 +41,8 @@ export function AvailabilitySection() {
     : 0;
 
   // Simple season logic
-  const getPricePerNight = (): number => {
-    if (!checkIn) return 150;
-    const month = checkIn.getMonth();
+  const getFallbackPriceForDate = (date: Date): number => {
+    const month = date.getMonth();
     
     // Alta stagione: Dicembre-Marzo (inverno) e Luglio-Agosto (estate)
     if ((month >= 0 && month <= 2) || (month === 11) || (month === 6 || month === 7)) {
@@ -63,9 +69,35 @@ export function AvailabilitySection() {
   };
 
   const totalGuests = adults + children;
-  const pricePerNight = getPricePerNight();
   const season = getSeason();
-  const basePrice = nights * pricePerNight;
+
+  const pricingSummary = useMemo(() => {
+    if (!checkIn || !checkOut || nights === 0) {
+      return { baseTotal: 0, average: 0, hasMissing: false };
+    }
+
+    let total = 0;
+    let hasMissing = false;
+    let cursor = new Date(checkIn);
+
+    while (cursor < checkOut) {
+      const isoDate = toIsoDate(cursor);
+      const price = priceMap.get(isoDate);
+      if (price == null) {
+        hasMissing = true;
+        total += getFallbackPriceForDate(cursor);
+      } else {
+        total += price;
+      }
+      cursor = addDays(cursor, 1);
+    }
+
+    const average = nights > 0 ? Math.round(total / nights) : 0;
+    return { baseTotal: total, average, hasMissing };
+  }, [checkIn, checkOut, nights, priceMap]);
+
+  const pricePerNight = pricingSummary.average || (checkIn ? getFallbackPriceForDate(checkIn) : 0);
+  const basePrice = pricingSummary.baseTotal;
   const cleaningFee = 80;
   const petFee = pets > 0 ? pets * 15 : 0;
   const totalPrice = basePrice + cleaningFee + petFee;
@@ -142,6 +174,7 @@ export function AvailabilitySection() {
               onDateSelect={handleDateSelect}
               selectedCheckIn={checkIn}
               selectedCheckOut={checkOut}
+              onDataLoaded={handleCalendarData}
             />
             
             {/* Info card below calendar */}
@@ -202,6 +235,11 @@ export function AvailabilitySection() {
                   cleaningFee={cleaningFee}
                   extras={pets > 0 ? [{ name: `Animali domestici (${pets})`, price: petFee }] : []}
                 />
+                {pricingSummary.hasMissing ? (
+                  <p className="mt-3 text-xs text-[var(--forest-roast)]/60">
+                    Prezzo da definire per alcune notti: stiamo usando un valore indicativo.
+                  </p>
+                ) : null}
                 
                 {/* Proceed to contact form button */}
                 {!showContactForm && (
