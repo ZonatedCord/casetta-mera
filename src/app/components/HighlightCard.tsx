@@ -26,7 +26,7 @@ export function HighlightCard({ icon: Icon, title, description, index }: Highlig
       />
       
       <div className="relative">
-        <div className="w-14 h-14 rounded-2xl bg-[var(--almond)]/30 flex items-center justify-center mb-6 group-hover:bg-[var(--matcha-brew)]/20 transition-colors">
+        <div className="w-14 h-14 rounded-2xl bg-[var(--almond)]/30 flex items-center justify-center mb-6 mx-auto sm:mx-0 group-hover:bg-[var(--matcha-brew)]/20 transition-colors">
           <Icon className="w-7 h-7 text-[var(--matcha-brew)]" />
         </div>
         

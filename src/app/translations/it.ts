@@ -75,6 +75,16 @@ export const it = {
     subtitle: 'Una selezione di immagini per farti innamorare',
     viewAll: 'Mostra tutte le foto',
     hidePhotos: 'Nascondi foto',
+    captions: {
+      exterior: 'Casetta Mera - Vista esterna',
+      livingRoom: 'Soggiorno con camino',
+      bedroom: 'Camera da letto principale',
+      panorama: 'Vista panoramica dalle Alpi',
+      terrace: 'Terrazza con vista montagne',
+      ski: 'Piste da sci nelle vicinanze',
+      hiking: 'Sentieri per escursioni',
+      bike: 'Percorsi mountain bike',
+    },
   },
 
   // Services Section

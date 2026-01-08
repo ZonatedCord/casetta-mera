@@ -75,6 +75,16 @@ export const en = {
     subtitle: 'A selection of images to fall in love with',
     viewAll: 'View all photos',
     hidePhotos: 'Hide photos',
+    captions: {
+      exterior: 'Casetta Mera - Exterior view',
+      livingRoom: 'Living room with fireplace',
+      bedroom: 'Primary bedroom',
+      panorama: 'Panoramic Alpine view',
+      terrace: 'Terrace with mountain view',
+      ski: 'Ski slopes nearby',
+      hiking: 'Hiking trails',
+      bike: 'Mountain bike trails',
+    },
   },
 
   // Services Section
