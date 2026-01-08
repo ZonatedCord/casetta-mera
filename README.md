@@ -113,6 +113,20 @@ The site is ready to run! All dependencies are installed and configured.
 4. Connect quote form to email service
 5. Replace demo photos with actual cabin photos
 
+## ✉️ Inquiries API (Cloudflare Pages Function)
+
+Set these Cloudflare Pages environment variables:
+
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `RESEND_API_KEY`
+- `NOTIFY_TO_EMAIL`
+
+Local testing:
+
+- In Cloudflare Pages, the function is available at `/api/inquiries`.
+- For local testing, use `wrangler pages dev` (if configured) and submit the form.
+
 ## 📱 Mobile Optimizations
 
 - Touch-friendly minimum tap target sizes (44px)

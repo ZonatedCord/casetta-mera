@@ -34,6 +34,8 @@ export function QuoteFormModal({ isOpen, onClose }: QuoteFormModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -68,13 +70,51 @@ export function QuoteFormModal({ isOpen, onClose }: QuoteFormModalProps) {
     if (!isOpen) {
       setDragOffset(0);
       setIsDragging(false);
+      setIsSubmitting(false);
+      setSubmitError(null);
     }
   }, [isOpen]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const payload = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim() || undefined,
+      message: formData.notes.trim() || 'Nessun messaggio',
+      checkIn: formData.checkIn || undefined,
+      checkOut: formData.checkOut || undefined,
+      guests: Number(formData.guests) || undefined,
+    };
+
+    try {
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        const errorMessage = errorBody?.error ?? 'Errore durante l’invio. Riprova più tardi.';
+        setSubmitError(errorMessage);
+        setIsSubmitting(false);
+        return;
+      }
+    } catch (error) {
+      console.error('Notify inquiry request failed', error);
+      setSubmitError('Errore durante l’invio. Riprova più tardi.');
+      setIsSubmitting(false);
+      return;
+    }
+
     setIsSubmitted(true);
-    setTimeout(() => {
+    setIsSubmitting(false);
+
+    window.setTimeout(() => {
       setIsSubmitted(false);
       onClose();
       setFormData({
@@ -86,6 +126,7 @@ export function QuoteFormModal({ isOpen, onClose }: QuoteFormModalProps) {
         guests: '2',
         notes: ''
       });
+      setSubmitError(null);
     }, 3000);
   };
 
@@ -300,15 +341,22 @@ export function QuoteFormModal({ isOpen, onClose }: QuoteFormModalProps) {
                     </div>
 
                     {/* Submit */}
-                    <Button
-                      type="submit"
-                      className="w-full h-12 rounded-xl bg-[var(--matcha-brew)] hover:bg-[var(--eclipse)] text-white"
-                    >
-                      Invia richiesta
-                    </Button>
+                  <Button
+                    type="submit"
+                    className="w-full h-12 rounded-xl bg-[var(--matcha-brew)] hover:bg-[var(--eclipse)] text-white"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Invio in corso...' : 'Invia richiesta'}
+                  </Button>
 
-                    <p className="text-xs text-[var(--forest-roast)]/60 text-center">
-                      Inviando questo modulo accetti la nostra{' '}
+                  {submitError ? (
+                    <p className="text-sm text-rose-600 text-center">
+                      {submitError}
+                    </p>
+                  ) : null}
+
+                  <p className="text-xs text-[var(--forest-roast)]/60 text-center">
+                    Inviando questo modulo accetti la nostra{' '}
                       <a href="#" className="text-[var(--matcha-brew)] hover:underline">
                         privacy policy
                       </a>

@@ -7,7 +7,6 @@ import { Checkbox } from './ui/checkbox';
 import { Label } from './ui/label';
 import { Send, Shield, Clock } from 'lucide-react';
 import { toast } from 'sonner';
-import { supabase } from '../lib/supabaseClient';
 import { toIsoDate } from '../lib/availability';
 
 interface BookingContactFormProps {
@@ -42,51 +41,36 @@ export function BookingContactForm({ bookingDetails }: BookingContactFormProps) 
 
     setIsSubmitting(true);
 
-    const payload = {
-      name: `${formData.firstName} ${formData.lastName}`.trim(),
+    const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+    const notifyPayload = {
+      name: fullName,
       email: formData.email,
-      phone: formData.phone,
-      message: formData.message || null,
-      check_in: bookingDetails?.checkIn ? toIsoDate(bookingDetails.checkIn) : null,
-      check_out: bookingDetails?.checkOut ? toIsoDate(bookingDetails.checkOut) : null,
-      guests: bookingDetails?.guests ?? null,
-      source: 'form',
-      status: 'new',
+      phone: formData.phone || undefined,
+      message: formData.message?.trim() || 'Nessun messaggio',
+      checkIn: bookingDetails?.checkIn ? toIsoDate(bookingDetails.checkIn) : undefined,
+      checkOut: bookingDetails?.checkOut ? toIsoDate(bookingDetails.checkOut) : undefined,
+      guests: bookingDetails?.guests ?? undefined,
     };
 
-    const { data, error } = await supabase
-      .from('inquiries')
-      .insert(payload)
-      .select('id')
-      .single();
+    try {
+      const notifyResponse = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(notifyPayload),
+      });
 
-    if (error) {
-      console.error('Supabase insert inquiries failed', error.message);
+      if (!notifyResponse.ok) {
+        const errorBody = await notifyResponse.json().catch(() => null);
+        const errorMessage = errorBody?.error ?? 'Errore durante l’invio. Riprova più tardi.';
+        toast.error(errorMessage);
+        setIsSubmitting(false);
+        return;
+      }
+    } catch (error) {
+      console.error('Notify inquiry request failed', error);
       toast.error('Errore durante l’invio. Riprova più tardi.');
       setIsSubmitting(false);
       return;
-    }
-
-    if (data?.id) {
-      const { error: notifyError } = await supabase.functions.invoke('notify-inquiry', {
-        body: { inquiryId: data.id },
-      });
-
-      if (notifyError) {
-        console.warn('Supabase notify-inquiry failed', notifyError.message);
-        console.warn('notify-inquiry status', notifyError.context?.status);
-        const body = notifyError.context?.body;
-        if (body) {
-          try {
-            const text = await new Response(body).text();
-            console.warn('notify-inquiry body', text);
-          } catch (readError) {
-            console.warn('notify-inquiry body read failed', readError);
-          }
-        }
-      }
-    } else {
-      console.warn('Supabase inquiry insert succeeded but returned no id');
     }
 
     toast.success('Richiesta inviata! Ti contatteremo entro 24 ore.');
