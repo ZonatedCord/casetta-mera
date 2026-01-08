@@ -30,8 +30,10 @@ export function AdminLayout({ children, activePath, onNavigate, title, subtitle 
           </div>
         </div>
       </div>
-      <div className="fixed bottom-6 left-4 right-4 z-10 rounded-2xl border border-[var(--forest-roast)]/10 bg-white px-4 py-3 shadow-lg md:hidden">
-        <AdminBottomNav activePath={activePath} onNavigate={onNavigate} />
+      <div className="fixed inset-x-0 bottom-0 z-10 px-4 pb-4 md:hidden">
+        <div className="rounded-2xl border border-[var(--forest-roast)]/10 bg-white px-4 py-3 shadow-lg">
+          <AdminBottomNav activePath={activePath} onNavigate={onNavigate} />
+        </div>
       </div>
     </div>
   );

@@ -234,8 +234,8 @@ export function AdminInquiriesPage() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-      <div className="space-y-4">
+    <div className="grid w-full max-w-full gap-6 lg:grid-cols-[1.1fr_1fr]">
+      <div className="w-full max-w-full space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-[var(--eclipse)]">Richieste</h3>

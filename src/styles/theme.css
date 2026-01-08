@@ -97,9 +97,18 @@
     @apply border-border outline-ring/50;
   }
 
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   /**
@@ -109,6 +118,9 @@
 
   html {
     font-size: var(--font-size);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   h1 {
@@ -155,6 +167,22 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+
+  #root {
+    overflow-x: hidden;
+  }
+
+  img,
+  video,
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  svg,
+  iframe {
+    max-width: 100%;
   }
   
   /* Smooth scrolling */
