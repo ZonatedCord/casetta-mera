@@ -1,3 +1,11 @@
+
+export const onRequestGet: PagesFunction<Env> = async () => {
+  return jsonResponse(200, {
+    ok: true,
+    route: '/api/inquiries',
+    message: 'Pages Function is reachable. Use POST to submit an inquiry.',
+  });
+};
 type InquiryPayload = {
   name?: string;
   email?: string;
@@ -128,7 +136,13 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   });
 
   if (!insertResponse.ok) {
-    return jsonResponse(500, { ok: false, error: 'Supabase insert failed' });
+    const details = await insertResponse.text().catch(() => '');
+    return jsonResponse(500, {
+      ok: false,
+      error: 'Supabase insert failed',
+      status: insertResponse.status,
+      details,
+    });
   }
 
   const resendResponse = await fetch('https://api.resend.com/emails', {
@@ -149,7 +163,13 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   });
 
   if (!resendResponse.ok) {
-    return jsonResponse(500, { ok: false, error: 'Resend error' });
+    const details = await resendResponse.text().catch(() => '');
+    return jsonResponse(500, {
+      ok: false,
+      error: 'Resend error',
+      status: resendResponse.status,
+      details,
+    });
   }
 
   return jsonResponse(200, { ok: true });
