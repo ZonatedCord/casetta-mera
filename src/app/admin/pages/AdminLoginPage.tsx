@@ -31,15 +31,15 @@ export function AdminLoginPage({ onSuccess }: AdminLoginPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-6">
-      <div className="w-full max-w-md rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
-        <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">Casetta Mera</p>
-        <h1 className="mt-2 text-2xl font-semibold text-neutral-900">Accesso admin</h1>
-        <p className="mt-2 text-sm text-neutral-500">
+    <div className="min-h-screen bg-[var(--almond)]/15 flex items-center justify-center px-6">
+      <div className="w-full max-w-md rounded-3xl border border-[var(--forest-roast)]/10 bg-white p-8 shadow-sm">
+        <p className="text-xs uppercase tracking-[0.2em] text-[var(--forest-roast)]/60">Casetta Mera</p>
+        <h1 className="mt-2 text-2xl font-semibold text-[var(--eclipse)]">Accesso admin</h1>
+        <p className="mt-2 text-sm text-[var(--forest-roast)]/70">
           Inserisci le credenziali per accedere alla dashboard.
         </p>
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-          <label className="block text-sm font-medium text-neutral-700">
+          <label className="block text-sm font-medium text-[var(--forest-roast)]">
             Email
             <input
               type="email"
@@ -48,10 +48,10 @@ export function AdminLoginPage({ onSuccess }: AdminLoginPageProps) {
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-neutral-200 px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-neutral-400"
+              className="mt-2 w-full rounded-2xl border border-[var(--forest-roast)]/20 px-4 py-3 text-sm text-[var(--eclipse)] outline-none transition focus:border-[var(--matcha-brew)]"
             />
           </label>
-          <label className="block text-sm font-medium text-neutral-700">
+          <label className="block text-sm font-medium text-[var(--forest-roast)]">
             Password
             <input
               type="password"
@@ -60,7 +60,7 @@ export function AdminLoginPage({ onSuccess }: AdminLoginPageProps) {
               required
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-neutral-200 px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-neutral-400"
+              className="mt-2 w-full rounded-2xl border border-[var(--forest-roast)]/20 px-4 py-3 text-sm text-[var(--eclipse)] outline-none transition focus:border-[var(--matcha-brew)]"
             />
           </label>
           {errorMessage ? (
@@ -71,7 +71,7 @@ export function AdminLoginPage({ onSuccess }: AdminLoginPageProps) {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded-full bg-neutral-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-70"
+            className="w-full rounded-full bg-[var(--matcha-brew)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--eclipse)] disabled:cursor-not-allowed disabled:opacity-70"
           >
             {isLoading ? 'Accesso in corso...' : 'Entra'}
           </button>

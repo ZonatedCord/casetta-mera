@@ -19,11 +19,11 @@ export function AdminSidebar({ activePath, onNavigate }: AdminSidebarProps) {
   };
 
   return (
-    <aside className="flex h-full w-full flex-col justify-between border-r border-neutral-200 bg-white px-5 py-6">
+    <aside className="flex h-full w-full flex-col justify-between border-r border-[var(--forest-roast)]/10 bg-white px-5 py-6">
       <div>
         <div className="mb-8">
-          <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">Casetta Mera</p>
-          <h1 className="mt-2 text-lg font-semibold text-neutral-900">Admin</h1>
+          <p className="text-xs uppercase tracking-[0.2em] text-[var(--forest-roast)]/60">Casetta Mera</p>
+          <h1 className="mt-2 text-lg font-semibold text-[var(--eclipse)]">Admin</h1>
         </div>
         <nav className="space-y-2">
           {navItems.map((item) => {
@@ -36,8 +36,8 @@ export function AdminSidebar({ activePath, onNavigate }: AdminSidebarProps) {
                 onClick={() => onNavigate(item.path)}
                 className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition ${
                   isActive
-                    ? 'bg-neutral-900 text-white'
-                    : 'text-neutral-600 hover:bg-neutral-100'
+                    ? 'bg-[var(--matcha-brew)] text-white shadow-sm'
+                    : 'text-[var(--forest-roast)]/80 hover:bg-[var(--almond)]/20'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -50,7 +50,7 @@ export function AdminSidebar({ activePath, onNavigate }: AdminSidebarProps) {
       <button
         type="button"
         onClick={handleSignOut}
-        className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-neutral-500 transition hover:bg-neutral-100"
+        className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-[var(--forest-roast)]/70 transition hover:bg-[var(--almond)]/20"
       >
         <LogOut className="h-4 w-4" />
         Logout

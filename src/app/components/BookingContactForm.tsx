@@ -54,13 +54,39 @@ export function BookingContactForm({ bookingDetails }: BookingContactFormProps) 
       status: 'new',
     };
 
-    const { error } = await supabase.from('inquiries').insert(payload);
+    const { data, error } = await supabase
+      .from('inquiries')
+      .insert(payload)
+      .select('id')
+      .single();
 
     if (error) {
       console.error('Supabase insert inquiries failed', error.message);
       toast.error('Errore durante l’invio. Riprova più tardi.');
       setIsSubmitting(false);
       return;
+    }
+
+    if (data?.id) {
+      const { error: notifyError } = await supabase.functions.invoke('notify-inquiry', {
+        body: { inquiryId: data.id },
+      });
+
+      if (notifyError) {
+        console.warn('Supabase notify-inquiry failed', notifyError.message);
+        console.warn('notify-inquiry status', notifyError.context?.status);
+        const body = notifyError.context?.body;
+        if (body) {
+          try {
+            const text = await new Response(body).text();
+            console.warn('notify-inquiry body', text);
+          } catch (readError) {
+            console.warn('notify-inquiry body read failed', readError);
+          }
+        }
+      }
+    } else {
+      console.warn('Supabase inquiry insert succeeded but returned no id');
     }
 
     toast.success('Richiesta inviata! Ti contatteremo entro 24 ore.');

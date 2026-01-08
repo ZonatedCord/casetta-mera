@@ -192,9 +192,9 @@ export function AdminAvailabilityPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">Calendario</p>
-          <h3 className="mt-2 text-xl font-semibold text-neutral-900 capitalize">{monthLabel}</h3>
-          <p className="mt-2 text-sm text-neutral-500">
+          <p className="text-xs uppercase tracking-[0.2em] text-[var(--forest-roast)]/60">Calendario</p>
+          <h3 className="mt-2 text-xl font-semibold text-[var(--eclipse)] capitalize">{monthLabel}</h3>
+          <p className="mt-2 text-sm text-[var(--forest-roast)]/70">
             Clicca un giorno per selezionare un blocco singolo o un range.
           </p>
         </div>
@@ -202,14 +202,14 @@ export function AdminAvailabilityPage() {
           <button
             type="button"
             onClick={() => setCurrentMonth(startOfMonth(addMonths(currentMonth, -1)))}
-            className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-600 transition hover:border-neutral-300"
+            className="rounded-full border border-[var(--forest-roast)]/20 px-4 py-2 text-sm font-medium text-[var(--forest-roast)]/80 transition hover:border-[var(--forest-roast)]/40"
           >
             Mese precedente
           </button>
           <button
             type="button"
             onClick={() => setCurrentMonth(startOfMonth(addMonths(currentMonth, 1)))}
-            className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-600 transition hover:border-neutral-300"
+            className="rounded-full border border-[var(--forest-roast)]/20 px-4 py-2 text-sm font-medium text-[var(--forest-roast)]/80 transition hover:border-[var(--forest-roast)]/40"
           >
             Mese successivo
           </button>
@@ -223,7 +223,7 @@ export function AdminAvailabilityPage() {
       ) : null}
 
       <div className="grid gap-2">
-        <div className="grid grid-cols-7 gap-2 text-xs uppercase tracking-[0.2em] text-neutral-400">
+        <div className="grid grid-cols-7 gap-2 text-xs uppercase tracking-[0.2em] text-[var(--forest-roast)]/60">
           {['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((label) => (
             <div key={label} className="text-center">
               {label}
@@ -250,15 +250,15 @@ export function AdminAvailabilityPage() {
                     onClick={() => handleDayClick(day)}
                     className={`flex h-14 flex-col items-center justify-center rounded-2xl text-sm font-medium transition ${
                       !isCurrentMonth
-                        ? 'text-neutral-300'
+                        ? 'text-[var(--forest-roast)]/30'
                         : blocked
-                        ? 'bg-neutral-900 text-white'
-                        : 'bg-neutral-50 text-neutral-700 hover:bg-neutral-100'
-                    } ${isSelected || isStart ? 'ring-2 ring-neutral-900 ring-offset-2' : ''}`}
+                        ? 'bg-[var(--forest-roast)] text-white'
+                        : 'bg-[var(--almond)]/15 text-[var(--forest-roast)]/90 hover:bg-[var(--almond)]/25'
+                    } ${isSelected || isStart ? 'ring-2 ring-[var(--matcha-brew)] ring-offset-2 ring-offset-white' : ''}`}
                   >
                     {day.getDate()}
                     {dayPrice ? (
-                      <span className={`text-[11px] ${blocked ? 'text-neutral-200' : 'text-neutral-500'}`}>
+                      <span className={`text-[11px] ${blocked ? 'text-white/70' : 'text-[var(--forest-roast)]/60'}`}>
                         €{dayPrice}
                       </span>
                     ) : null}
@@ -270,8 +270,8 @@ export function AdminAvailabilityPage() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-4">
-        <div className="text-sm text-neutral-600">
+      <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-[var(--forest-roast)]/10 bg-[var(--almond)]/10 px-4 py-4">
+        <div className="text-sm text-[var(--forest-roast)]/80">
           {rangeStart ? (
             <span>
               Selezione: {toIsoDate(rangeStart)}{rangeEnd ? ` -> ${toIsoDate(rangeEnd)}` : ''}
@@ -284,7 +284,7 @@ export function AdminAvailabilityPage() {
           type="button"
           onClick={handleSaveBlock}
           disabled={!rangeStart}
-          className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-full bg-[var(--matcha-brew)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[var(--eclipse)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSaving ? 'Salvataggio...' : 'Salva blocco'}
         </button>
@@ -295,13 +295,13 @@ export function AdminAvailabilityPage() {
             placeholder="Prezzo EUR"
             value={priceInput}
             onChange={(event) => setPriceInput(event.target.value)}
-            className="w-32 rounded-full border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-600"
+            className="w-32 rounded-full border border-[var(--forest-roast)]/20 bg-white px-3 py-2 text-sm text-[var(--forest-roast)]/80"
           />
           <button
             type="button"
             onClick={handleSavePrice}
             disabled={!rangeStart || isSaving}
-            className="rounded-full border border-neutral-900 px-4 py-2 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-full border border-[var(--matcha-brew)] px-4 py-2 text-sm font-semibold text-[var(--matcha-brew)] transition hover:bg-[var(--almond)]/20 disabled:cursor-not-allowed disabled:opacity-60"
           >
             Salva prezzo
           </button>
@@ -309,7 +309,7 @@ export function AdminAvailabilityPage() {
             type="button"
             onClick={handleRemovePrice}
             disabled={!rangeStart || isSaving}
-            className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-600 transition hover:border-neutral-300 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-full border border-[var(--forest-roast)]/20 px-4 py-2 text-sm font-medium text-[var(--forest-roast)]/80 transition hover:border-[var(--forest-roast)]/40 disabled:cursor-not-allowed disabled:opacity-60"
           >
             Rimuovi prezzo
           </button>
@@ -320,27 +320,27 @@ export function AdminAvailabilityPage() {
             setRangeStart(null);
             setRangeEnd(null);
           }}
-          className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-600 transition hover:border-neutral-300"
+          className="rounded-full border border-[var(--forest-roast)]/20 px-4 py-2 text-sm font-medium text-[var(--forest-roast)]/80 transition hover:border-[var(--forest-roast)]/40"
         >
           Reset selezione
         </button>
       </div>
 
-      {isLoading ? <p className="text-sm text-neutral-500">Caricamento blocchi...</p> : null}
+      {isLoading ? <p className="text-sm text-[var(--forest-roast)]/60">Caricamento blocchi...</p> : null}
 
       {blocks.length > 0 ? (
-        <div className="rounded-2xl border border-neutral-200 bg-white p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">Blocchi salvati</p>
+        <div className="rounded-2xl border border-[var(--forest-roast)]/10 bg-white p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-[var(--forest-roast)]/60">Blocchi salvati</p>
           <div className="mt-3 space-y-2">
             {blocks.map((block) => (
-              <div key={block.id} className="flex items-center justify-between rounded-xl border border-neutral-200 px-3 py-2 text-sm">
+              <div key={block.id} className="flex items-center justify-between rounded-xl border border-[var(--forest-roast)]/10 px-3 py-2 text-sm text-[var(--forest-roast)]/80">
                 <span>
                   {block.start_date} {' -> '} {block.end_date}
                 </span>
                 <button
                   type="button"
                   onClick={() => handleDeleteBlock(block.id)}
-                  className="rounded-full border border-neutral-200 px-3 py-1 text-xs font-medium text-neutral-600 transition hover:border-neutral-300"
+                  className="rounded-full border border-[var(--forest-roast)]/20 px-3 py-1 text-xs font-medium text-[var(--forest-roast)]/80 transition hover:border-[var(--forest-roast)]/40"
                 >
                   Sblocca
                 </button>

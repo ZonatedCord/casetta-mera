@@ -23,7 +23,9 @@ export function AdminBottomNav({ activePath, onNavigate }: AdminBottomNavProps) 
             type="button"
             onClick={() => onNavigate(item.path)}
             className={`flex flex-1 flex-col items-center gap-1 rounded-2xl px-2 py-2 text-xs font-medium transition ${
-              isActive ? 'bg-neutral-900 text-white' : 'text-neutral-500'
+              isActive
+                ? 'bg-[var(--matcha-brew)] text-white shadow-sm'
+                : 'text-[var(--forest-roast)]/70 hover:bg-[var(--almond)]/20'
             }`}
           >
             <Icon className="h-4 w-4" />
